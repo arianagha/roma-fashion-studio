@@ -15,35 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('loaded');
     }
 
-    // ── Custom Cursor ──
-    const cursor = document.querySelector('.cursor');
-    if (cursor && window.matchMedia('(pointer: fine)').matches) {
-        let mx = 0, my = 0, cx = 0, cy = 0;
-
-        document.addEventListener('mousemove', (e) => {
-            mx = e.clientX;
-            my = e.clientY;
-        });
-
-        (function animateCursor() {
-            cx += (mx - cx) * 0.15;
-            cy += (my - cy) * 0.15;
-            cursor.style.transform = `translate(${cx - 4}px, ${cy - 4}px)`;
-            requestAnimationFrame(animateCursor);
-        })();
-
-        const hoverTargets = document.querySelectorAll('a, button, .product-card, .mobile-menu-btn, .lookbook-item');
-        hoverTargets.forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('cursor-grow'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('cursor-grow'));
-        });
-
-        document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; });
-        document.addEventListener('mouseenter', () => { cursor.style.opacity = '1'; });
-    } else if (cursor) {
-        cursor.style.display = 'none';
-    }
-
     // ── Page Transitions ──
     const pageTransition = document.querySelector('.page-transition');
     if (pageTransition) {
