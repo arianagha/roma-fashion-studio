@@ -20,6 +20,27 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('loaded');
     }
 
+    // Force autoplay videos on mobile
+    const videos = document.querySelectorAll('video[autoplay]');
+    if (videos.length) {
+        const videoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                const video = entry.target;
+                if (entry.isIntersecting) {
+                    video.play().catch(() => {});
+                } else {
+                    video.pause();
+                }
+            });
+        }, { threshold: 0.25 });
+        videos.forEach(v => {
+            v.setAttribute('playsinline', '');
+            v.setAttribute('webkit-playsinline', '');
+            v.muted = true;
+            videoObserver.observe(v);
+        });
+    }
+
     // Navbar Scroll Effect
     const navbar = document.getElementById('navbar');
 
